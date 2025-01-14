@@ -58,7 +58,7 @@ public class InMemoryUserStorage implements UserStorage {
             oldUser.setEmail(newUser.getEmail());
 
             log.info("Обновлен пользователь с id={} (новое имя: {}, новый email: {})",
-                    id, newUser .getName(), newUser .getEmail());
+                    id, newUser.getName(), newUser.getEmail());
 
             return oldUser;
         }
@@ -83,7 +83,7 @@ public class InMemoryUserStorage implements UserStorage {
             if (user.getEmail() != null && existingUser.getEmail() != null &&
                     existingUser.getEmail().equals(user.getEmail()) && !existingUser.getId().equals(userId)) {
                 log.warn("Попытка создать/обновить пользователя с email={}, который уже привязан к " +
-                        "другому пользователю с id={}", user.getEmail(), existingUser .getId());
+                        "другому пользователю с id={}", user.getEmail(), existingUser.getId());
                 throw new InternalServerException("Данный email уже привязан к другому пользователю");
             }
         }

@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         );
 
         User createdUser  = userStorage.create(user);
-        log.info("Создан пользователь с id={} и email={}", createdUser .getId(), createdUser .getEmail());
+        log.info("Создан пользователь с id={} и email={}", createdUser.getId(), createdUser.getEmail());
 
         return userMapper.toUserDto(createdUser);
     }
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setName(userDto.getName());
         existingUser.setEmail(userDto.getEmail());
 
-        User updatedUser  = userStorage.update(existingUser , id);
+        User updatedUser  = userStorage.update(existingUser, id);
         log.info("Пользователь с id={} обновлен. Новое имя: {}, новый email: {}",
                 id, userDto.getName(), userDto.getEmail());
 
