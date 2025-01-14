@@ -73,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
                     log.warn("Попытка получения несуществующей вещи с id {}", itemId);
                     return new NotFoundException("Вещь не найдена");
                 });
+
         return new ItemMapper().toItemDto(item);
     }
 
