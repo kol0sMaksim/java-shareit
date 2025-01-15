@@ -72,6 +72,11 @@ public class UserServiceImpl implements UserService {
         log.info("Удаляем пользователя с id={}", userId);
     }
 
+    @Override
+    public boolean existsById(Long userId) {
+        return getUserById(userId) != null;
+    }
+
     private User findUserById(Long id) {
         return Optional.ofNullable(userStorage.getUserById(id))
                 .orElseThrow(() -> {

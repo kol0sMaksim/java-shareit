@@ -20,7 +20,7 @@ public class InMemoryItemStorage implements ItemStorage {
     public Item addItem(Item item) {
         item.setId(getNextId());
         items.put(item.getId(), item);
-        log.debug("Добавлена новая вещь: {}", item);
+        log.info("Добавлена новая вещь: {}", item);
         return item;
     }
 
@@ -31,7 +31,7 @@ public class InMemoryItemStorage implements ItemStorage {
         }
         item.setId(itemId);
         items.put(itemId, item);
-        log.debug("Обновлена вещь с id: {}. Новые данные: {}", itemId, item);
+        log.info("Обновлена вещь с id: {}. Новые данные: {}", itemId, item);
         return item;
     }
 
@@ -46,7 +46,7 @@ public class InMemoryItemStorage implements ItemStorage {
                 userItems.add(item);
             }
         }
-        log.debug("Найдено {} вещей для владельца с id: {}", userItems.size(), ownerId);
+        log.info("Найдено {} вещей для владельца с id: {}", userItems.size(), ownerId);
         return userItems;
     }
 
@@ -60,7 +60,7 @@ public class InMemoryItemStorage implements ItemStorage {
                 foundItems.add(item);
             }
         }
-        log.debug("Поиск по тексту '{}', найдено {} вещей", text, foundItems.size());
+        log.info("Поиск по тексту '{}', найдено {} вещей", text, foundItems.size());
         return foundItems;
     }
 

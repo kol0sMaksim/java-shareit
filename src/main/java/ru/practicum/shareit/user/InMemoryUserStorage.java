@@ -19,7 +19,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public Collection<User> getUsers() {
-        log.debug("Получение списка всех пользователей. Всего пользователей: {}", users.size());
+        log.info("Получение списка всех пользователей. Всего пользователей: {}", users.size());
 
         return users.values();
     }
@@ -43,7 +43,7 @@ public class InMemoryUserStorage implements UserStorage {
 
         users.put(user.getId(), user);
 
-        log.debug("Создан пользователь с id={} и email={}", user.getId(), user.getEmail());
+        log.info("Создан пользователь с id={} и email={}", user.getId(), user.getEmail());
 
         return user;
     }
@@ -75,7 +75,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
 
         users.remove(userId);
-        log.debug("Удален пользователь с id={} ", userId);
+        log.info("Удален пользователь с id={} ", userId);
     }
 
     public void checkExistingEmail(User user, Long userId) {

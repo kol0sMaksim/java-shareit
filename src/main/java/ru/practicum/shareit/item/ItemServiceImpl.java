@@ -22,27 +22,33 @@ public class ItemServiceImpl implements ItemService {
     private ItemStorage itemStorage;
     private UserService userService;
 
-    public ItemDto addItem(ItemDto itemDto, Long userId) {
-        if (userService.getUserById(userId) == null) {
-            log.warn("Попытка добавления вещи пользователем с id: {}", userId);
-            throw new NotFoundException("Пользователь не найден");
+    public ItemDto addItem(ItemDto itemDto, Long userId) throws ValidationException {
+        try {
+            if (!userService.existsById(userId)) {
+                log.warn("Попытка добавления вещи пользователем с id: {}", userId);
+                throw new NotFoundException("Пользователь не найден");
+            }
+
+            if (itemDto.getAvailable() == null) {
+                log.warn("Пользователь с id {}: поле 'available' обязательно для заполнения", userId);
+                throw new ValidationException("Поле 'available' обязательно для заполнения");
+            }
+
+            Item item = new Item(
+                    null,
+                    itemDto.getName(),
+                    itemDto.getDescription(),
+                    itemDto.getAvailable(), userId,
+                    itemDto.getRequest());
+
+            Item savedItem = itemStorage.addItem(item);
+            log.info("Пользователь с id {} добавил новую вещь: {}", userId, savedItem);
+            return new ItemMapper().toItemDto(savedItem);
+
+        } catch (ValidationException e) {
+            log.error("Ошибка валидации: {}", e.getMessage());
+            throw e;
         }
-
-        if (itemDto.getAvailable() == null) {
-            log.warn("Пользователь с id {}: поле 'available' обязательно для заполнения", userId);
-            throw new ValidationException("Поле 'available' обязательно для заполнения");
-        }
-
-        Item item = new Item(
-                null,
-                itemDto.getName(),
-                itemDto.getDescription(),
-                itemDto.getAvailable(), userId,
-                itemDto.getRequest());
-
-        Item savedItem = itemStorage.addItem(item);
-        log.info("Пользователь с id {} добавил новую вещь: {}", userId, savedItem);
-        return new ItemMapper().toItemDto(savedItem);
     }
 
     public ItemDto updateItem(Long itemId, ItemDto itemDto, Long userId) {
